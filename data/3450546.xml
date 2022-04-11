@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://raw.githubusercontent.com/nakamura196/test2021/main/tei_all.rng" schematypens="http://relaxng.org/ns/structure/1.0" type="application/xml"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>タイトル</title>
+
+      </titleStmt>
+
+      <publicationStmt>
+        <p>出版情報</p>
+
+      </publicationStmt>
+
+      <sourceDesc>
+        <p>ソース情報</p>
+      </sourceDesc>
+
+    </fileDesc>
+  </teiHeader>
+  <!-- https://www.kanzaki.com/works/2016/pub/image-annotator?u=https://ocr.aws.ldas.jp/v1/manifest/3450546.json#p227 -->
+  <text>
+    <body>
+      <div>
+
+        <p>
+          <date when="9999-07-25">寛仁四年七月二十五日</date>
+          <name type="page">四二六</name>
+        </p>
+        <p>入道殿參內給、宰相從入道殿來、入夜退、</p>
+        <p>
+
+          <date>廿六日</date>、          <name type="zodiac">乙亥</name>、
+    
+          <note type="割書">
+            <seg type="warichu-right">○中</seg>
+            <!-- <milestone unit="wbr"/> -->
+            <seg type="warichu-left">略</seg>
+
+          </note>
+    昏黑宰相來云、參候關白殿、          <placeName>東大寺</placeName>別當僧正          <note type="割書">
+            <seg type="warichu-right">深覺</seg>
+          </note>、從今曉不食、
+          <lb/>
+轉讀孔雀經致祈願、依其驗德不發給、有引出物等、          <note type="warichu">
+            <seg type="warichu-right">入道殿馬一疋、</seg>
+            <seg type="warichu-left">關白殿二疋、</seg>
+          </note>
+
+        </p>
+        <p>
+          <date>廿七日</date>、          <name type="zodiac">丙子</name>、宰相資          <ruby>
+            <rb>平語</rb>
+            <rt>〔來脫カ〕</rt>
+          </ruby>、移時剋退、黃昏示送云、          <persName>
+            <ruby>
+              <rb>佐光朝臣</rb>
+              <rt>(                <persName>藤原</persName>)
+              </rt>
+            </ruby>
+          </persName>云、關白重發給、今夕
+
+    
+          <lb/>
+入道殿相共被參法性寺          <ruby>
+            <rb>□</rb>
+            <rt>〔五イ〕</rt>
+          </ruby>大堂、依今日發惱、入道殿歎息無極者、
+
+        </p>
+        <p>
+          <date>廿八日</date>、          <name type="zodiac">丁丑</name>、宰相資平來云、今曉關白參          <placeName>法性寺</placeName>、去夕入道殿被參也、緣關白瘧病祈
+          <lb/>
+事云々、          <note type="warichu">
+            <seg type="warichu-right">○中</seg>
+            <seg type="warichu-left">略</seg>
+          </note>
+          <ruby>
+            <rb>余有所</rb>
+            <rt>(              <persName>藤原實資</persName>) 
+            </rt>
+          </ruby>惱不參啓、關白瘧病事、                    示達
+          <ruby>
+            <rb>致仕</rb>
+            <rt>(              <persName>源俊賢</persName>) 
+            </rt>
+          </ruby>納言、報云、關白昨更發、半夜
+
+          <lb/>
+坐          <placeName>法性寺</placeName>已了、午時許可參入者、衝黑宰相來云、參          <placeName>法性寺</placeName>、關白已不發給、致仕大納
+
+    
+          <lb/>
+民ハ共ニ法性寺五大堂ニ入
+    
+    
+          <lb/>
+言俊賢以下卿相十一人參會、入道殿歸給、關白自明日四个日物忌、卽於此堂可被愼者、
+
+          <lb/>
+
+
+          <note type="割書">
+            <seg type="warichu-right">○流布本ヲ</seg>
+            <seg type="warichu-left">以テ校ス、</seg>
+          </note>
+
+        </p>
+        <p>
+
+          <name type="book">〔左經記〕</name>七月          <date></date>
+
+        </p>
+        <p>仁王經讀經七箇日          <date>
+            <ruby>
+              <rb>十</rb>
+              <rt>(廿)</rt>
+            </ruby>三日
+          </date>、          <note type="割書">
+            <seg type="warichu-right">○中</seg>
+            <seg type="warichu-left">略</seg>
+          </note>爲關白殿御、於彼殿令九口儈、限七箇日、讀不斷仁王經、
+    
+          <note type="割書">
+            <seg type="warichu-right">日者依御惱所被</seg>
+            <seg type="warichu-left">行也、而今日結</seg>
+          </note>
+
+
+
+          <note>
+            <lb/>
+心譽ヲシテ            <lb/>
+軍茶利法ヲ            <lb/>
+修セシム</note>
+
+          <note type="割書">
+            <seg type="warichu-right">御惱不怠、</seg>
+            <seg type="warichu-left"></seg>
+          </note>
+
+    始自今夜、令心譽僧都、同爲殿御、令修軍茶利法、
+    
+          <note type="割書">
+            <seg type="warichu-right">番僧</seg>
+            <seg type="warichu-left">九口、</seg>
+          </note>
+
+
+        </p>
+
+
+
+        <p>願仕申留非延
+    
+    
+    
+
+        </p>
+
+
+        <p>
+          <date>廿六            <ruby>
+              <rb>日</rb>
+              <rt>(マヽ) </rt>
+            </ruby>
+          </date>、          <name type="zodiac">乙亥</name>、
+                    
+          <note type="割書">
+            <seg type="warichu-right">〇中</seg>
+            <seg type="warichu-left">略</seg>
+          </note>
+                    
+                    
+                    參入道殿、次參關白殿          <ruby>
+            <rb>陣</rb>
+            <rt>(衍カ)</rt>
+          </ruby>、禪林寺僧正          <note type="割書">
+            <seg type="warichu-right">深覺、</seg>
+            <seg type="warichu-left"></seg>
+          </note>自今曉被候奉加          <ruby>
+            <rb>□</rb>
+            <rt>〔持カ〕</rt>
+          </ruby>
+
+        </p>
+
+        <p>病已不令發給、及曉景有牽出物、          <note type="割書">
+            <seg type="warichu-right">馬二</seg>
+            <seg type="warichu-left">疋、</seg>
+          </note>又自入道殿有御馬一疋、上下道俗隨喜無限、
+          <lb/>
+          <ruby>
+            <rb>月者</rb>
+            <rt>〔日イ〕</rt>
+          </ruby>有御惱、久無御歩、種々御祈甚以多々也、頗有減氣之旨、又日來令惱瘧病給、雖
+                
+          <lb/>
+                施方々治術、更無其驗、而僧正          <ruby>
+            <rb>揭被施</rb>
+            <rt>〔焉脫カ〕</rt>
+          </ruby>其驗、誠可隨喜々々、入夜歸宅、
+                
+        </p>
+
+        <p>
+          <date>廿七日</date>、          <name type="zodiac">丙午</name>、傳聞、關白殿又令發惱給、入夜入道殿相共令詣法性寺五大堂給云々、廿八日、丁丑、早旦參法性寺、於五大堂、入道殿〓諸有驗人々相共奉加持、關白殿及道長諷誦ヲ行フ日入已不發、仍入道殿於寺中諸堂被行諷誦、八月再發セズ修法七箇日六日、乙酉、風聞、關白殿自令籠法性寺給以來、瘧病已不令發給、又始自去月廿九日物怪自ラ調心譽·明(特伏セラル七个日、以三口僧尊·成典、於五大堂被修御修法云々、御物氣等不加々治、自然調伏云々、出ヅ法性寺ヨリ七日、丙戌、參入道殿〓關白殿·内·上東門院等、法性寺出御、關白殿今日自八日、丁亥、參入道〓關白殿等、          <name type="book">〔小記目錄〕</name>二十御惱事臣下○京都御所東山御文庫本(寛仁四)          <date>同年七月十三日</date>、關白所惱事、          <date>寛仁四年七月二十五日</date>
+
+
+
+          <name type="page">四二七</name>
+
+        </p>
+      </div>
+
+      <div style="display:none;">
+        <note>
+          <lb/>
+公卿法性寺          <lb/>
+ニ參會ス</note>
+        <note>
+          <lb/>
+賴通ノ物忌</note>
+      </div>
+
+
+
+    </body>
+  </text>
+</TEI>

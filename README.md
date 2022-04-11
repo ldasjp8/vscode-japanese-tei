@@ -58,3 +58,7 @@ Initial release
 
 Add some configurations
 
+### 0.0.3
+
+Minor update
+
