@@ -6,37 +6,47 @@ TEI/XMLファイルの編集/表示用のVSCode拡張機能
 
 ## Features
 
-### en
+`@en`
 
 - Real-time preview
 - Use custom style
-- Input aids for some tags such as `ruby` and `app`
+- Input aids for some tags such as `<ruby>` and `<app>`
 
-### ja
+`@ja`
 
 - リアルタイムプレビュー機能
 - カスタムスタイルの使用
-- `ruby` や `app` などの一部のタグの入力補助
+- `<ruby>` や `<app>` などの一部のタグの入力補助
 
 ### Commands
 
 Command | Shortcut | Mac | Other
 ---------|----------|---------|---------
-Generate panel / プレビューを開く | cmd-k v | ctrl-k v
-Insert ruby / ルビを挿入する | cmd-k r | ctrl-k r
-Insert warichu / 割注を挿入する | cmd-k w | ctrl-k w
+Generate panel / プレビューを開く | ctrl-k v |  cmd-k v | 
+Insert ruby / ルビを挿入する | ctrl-k r |  cmd-k r | 
+Insert warichu / 割注を挿入する | ctrl-k w |  cmd-k w | 
 
 ## Configuration
 
 ### fontSize
 
-#### en
+`@en`
 
 Base font size to use for the preview panel
 
-#### ja
+`@ja`
 
 プレビューパネルで使用する基本フォントサイズ
+
+### useStylesCETEIcean
+
+`@en`
+
+Use CETEIcean styles
+
+`@ja`
+
+CETEIceanのスタイルを使用する
 
 ## Release Notes
 
