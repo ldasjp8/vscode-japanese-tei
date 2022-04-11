@@ -2,7 +2,6 @@ import * as vscode from "vscode";
 import { JSDOM } from "jsdom";
 
 export function activate(context: vscode.ExtensionContext) {
-
   //パネルを作成する
   let panelGenerator = vscode.commands.registerCommand(
     "vscode-japanese-tei.openPreview",
@@ -13,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.ViewColumn.Two,
         { enableScripts: true }
       );
-      
+
       //初期値
       panel.webview.html = generatePanelContent();
 
@@ -35,64 +34,73 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(panelGenerator);
 
-  const disposable = vscode.commands.registerCommand('vscode-japanese-tei.insertApp', function () {
-		// Get the active text editor
-		const editor = vscode.window.activeTextEditor;
+  const disposable = vscode.commands.registerCommand(
+    "vscode-japanese-tei.insertApp",
+    function () {
+      // Get the active text editor
+      const editor = vscode.window.activeTextEditor;
 
-		if (editor) {
-			const document = editor.document;
-			const selection = editor.selection;
+      if (editor) {
+        const document = editor.document;
+        const selection = editor.selection;
 
-			// Get the word within the selection
-			const word = document.getText(selection);
-			//const reversed = word.split('').reverse().join('');
-      const replacedWord = ["<app>",  "<lem>", word, "</lem>", "<rdg>", "</rdg>", "</app>"].join("");
-			editor.edit(editBuilder => {
-				editBuilder.replace(selection, replacedWord);
-			});
-		}
-	});
+        // Get the word within the selection
+        const word = document.getText(selection);
+        //const reversed = word.split('').reverse().join('');
+        const replacedWord = `<app><lem>${word}</lem><rdg></rdg></app>`;
+        editor.edit((editBuilder) => {
+          editBuilder.replace(selection, replacedWord);
+        });
+      }
+    }
+  );
 
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 
-  const insertWarichu = vscode.commands.registerCommand('vscode-japanese-tei.insertWarichu', function () {
-		// Get the active text editor
-		const editor = vscode.window.activeTextEditor;
+  const insertWarichu = vscode.commands.registerCommand(
+    "vscode-japanese-tei.insertWarichu",
+    function () {
+      // Get the active text editor
+      const editor = vscode.window.activeTextEditor;
 
-		if (editor) {
-			const document = editor.document;
-			const selection = editor.selection;
+      if (editor) {
+        const document = editor.document;
+        const selection = editor.selection;
 
-			// Get the word within the selection
-			const word = document.getText(selection);
-			//const reversed = word.split('').reverse().join('');
-      const replacedWord = [`<note type="割書">`, '<seg type="warichu-right">', word, "</seg>", `<seg type="warichu-left">`, "</seg>", "</note>"].join("");
-			editor.edit(editBuilder => {
-				editBuilder.replace(selection, replacedWord);
-			});
-		}
-	});
+        // Get the word within the selection
+        const word = document.getText(selection);
+        //const reversed = word.split('').reverse().join('');
+        const replacedWord = `<note type="割書"><seg type="warichu-right">${word}</seg><seg type="warichu-left"></seg></note>`;
+        editor.edit((editBuilder) => {
+          editBuilder.replace(selection, replacedWord);
+        });
+      }
+    }
+  );
 
-	context.subscriptions.push(insertWarichu);
+  context.subscriptions.push(insertWarichu);
 
-  const insertRuby = vscode.commands.registerCommand('vscode-japanese-tei.insertRuby', function () {
-		// Get the active text editor
-		const editor = vscode.window.activeTextEditor;
+  const insertRuby = vscode.commands.registerCommand(
+    "vscode-japanese-tei.insertRuby",
+    function () {
+      // Get the active text editor
+      const editor = vscode.window.activeTextEditor;
 
-		if (editor) {
-			const document = editor.document;
-			const selection = editor.selection;
+      if (editor) {
+        const document = editor.document;
+        const selection = editor.selection;
 
-			// Get the word within the selection
-			const word = document.getText(selection);
-      const replacedWord = [`<ruby>`, '<rb>', word, "</rb>", `<rt>`, "</rt>", "</ruby>"].join("");
-			editor.edit(editBuilder => {
-				editBuilder.replace(selection, replacedWord);
-			});
-		}
-	});
+        // Get the word within the selection
+        const word = document.getText(selection);
+        const replacedWord = `<ruby><rb>${word}</rb><rt></rt></ruby>`;
+        editor.edit((editBuilder) => {
+          editBuilder.replace(selection, replacedWord);
+        });
+      }
+    }
+  );
 
-	context.subscriptions.push(insertRuby);
+  context.subscriptions.push(insertRuby);
 }
 
 function generatePanelContent() {
@@ -120,6 +128,10 @@ function generatePanelContent() {
   /* p */
   tei-p {
     display: block;
+  }
+
+  tei-name {
+    background-color: lightyellow;
   }
 
   tei-date {
@@ -218,23 +230,26 @@ function convertXml2Html(xml: string) {
 
   //空タグへの対応
   const emptyTags = html.match(/<.+?\/>/g);
-  for(const emptyTag of emptyTags){
-    const tmp = emptyTag.split("<");
-    const tagName = tmp[tmp.length-1].split(" ")[0];
-    const replaced = emptyTag.replace(/\/>/, `></${tagName}>`);
-    html = html.replace(emptyTag, replaced);
+  if (emptyTags) {
+    for (const emptyTag of emptyTags) {
+      const tmp = emptyTag.split("<");
+      const tagName = tmp[tmp.length - 1].split(" ")[0];
+      const replaced = emptyTag.replace(/\/>/, `></${tagName}>`);
+      html = html.replace(emptyTag, replaced);
+    }
   }
 
   return html;
 }
 
 //tei/xmlの要素をhtml(tei-xxx)に変換する
-function convert(dom:any, e: any) {
+function convert(dom: any, e: any) {
   const nodeType = e.nodeType;
   //コメントの場合はスキップ
-  if(nodeType === 8){
+  if (nodeType === 8) {
     return null;
-  } else if(nodeType === 3){ //テキストノードの場合
+  } else if (nodeType === 3) {
+    //テキストノードの場合
     return e.textContent;
   }
 
@@ -268,7 +283,7 @@ function convert(dom:any, e: any) {
   } else {
     for (const child of children) {
       const convertedElement = convert(dom, child);
-      if(convertedElement){
+      if (convertedElement) {
         replacement.append(convertedElement);
       }
     }
