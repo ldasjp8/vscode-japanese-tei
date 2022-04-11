@@ -1,0 +1,47 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>vscode-japanese-tei <desc>縦書きサンプル</desc>
+                </title>
+                <title type="short">vscode-japanese-tei</title>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Satoru Nakamura</publisher>
+                <availability>
+                    <licence target="https://www.gnu.org/licenses/gpl-3.0.en.html">Distributed under GNU General Public License</licence>
+                    <p>This program is free software: you can redistribute it and/or modify
+                        it under the terms of the GNU General Public License as published by
+                        the Free Software Foundation, either version 3 of the License, or
+                        (at your option) any later version.</p>
+                    <p>This program is distributed in the hope that it will be useful,
+                        but WITHOUT ANY WARRANTY; without even the implied warranty of
+                        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                        GNU General Public License for more details.</p>
+                </availability>
+            </publicationStmt>
+            <sourceDesc>
+                <p>born digital</p>
+            </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+            <tagsDecl/>
+        </encodingDesc>
+        <revisionDesc>
+            <change when="2022-04-11+02:00">Initial version</change>
+        </revisionDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <schemaSpec start="TEI teiCorpus" ident="vscode-japanese-tei" source="teipublisher.odd">
+                <elementSpec ident="tei-p" mode="add">
+                    <model behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            color: red;
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+            </schemaSpec>
+        </body>
+    </text>
+</TEI>

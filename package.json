@@ -1,21 +1,30 @@
 {
   "name": "vscode-japanese-tei",
-  "displayName": "TEI/XMLファイル編集/表示機能",
-  "description": "TEI/XMLファイルを編集/表示するための拡張機能です。",
-  "version": "0.0.1",
+  "publisher": "ldas",
+  "displayName": "vscode-japanese-tei",
+  "description": "Edit and display TEI/XML",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.66.0"
   },
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "homepage": "https://github.com/ldasjp8/vscode-japanese-tei/blob/main/README.md",
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldasjp8/vscode-japanese-tei"
+  },
   "keywords": [
     "japanese",
     "tei",
-    "日本語",
     "xml"
   ],
   "activationEvents": [
+    "onLanguage:xml"
+  ],
+  "activationEvents2": [
     "onCommand:vscode-japanese-tei.openPreview",
     "onCommand:vscode-japanese-tei.insertApp",
     "onCommand:vscode-japanese-tei.insertRuby",
@@ -46,6 +55,16 @@
         "command": "vscode-japanese-tei.openPreview",
         "key": "ctrl+k v",
         "mac": "cmd+k v"
+      },
+      {
+        "command": "vscode-japanese-tei.insertRuby",
+        "key": "ctrl+k r",
+        "mac": "cmd+k r"
+      },
+      {
+        "command": "vscode-japanese-tei.insertWarichu",
+        "key": "ctrl+k w",
+        "mac": "cmd+k w"
       }
     ],
     "menus": {
@@ -63,6 +82,40 @@
           "command": "vscode-japanese-tei.insertRuby"
         }
       ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "vscode-japanese-tei",
+      "properties": {
+        "vscode-japanese-tei.fontSize": {
+          "type": "string",
+          "default": "1em",
+          "description": "Base font size to use for the preview panel"
+        },
+        "vscode-japanese-tei.useStylesCETEIcean": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use CETEIcean styles"
+        },
+        "vscode-japanese-tei.odd": {
+          "type": [
+            "vscode-japanese-tei",
+            "null"
+          ],
+          "default": "vscode-japanese-tei",
+          "description": "ODD file (Under development)"
+        },
+        "vscode-japanese-tei.useCustomStyle": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use custom style"
+        },
+        "vscode-japanese-tei.customStyle": {
+          "type": "string",
+          "default": "#main{overflow-y:auto;writing-mode:vertical-rl}tei-teiHeader{display:none}tei-p{display:block}tei-name{background-color:lightyellow}tei-date{background-color:lightblue}tei-persName{background-color:lightsalmon}tei-placeName{background-color:lightgreen}*[data-type=\"book\"]{color:green}*[data-type=\"page\"]{background-color:gray}tei-lb:after{content:'\\a';white-space:pre}*[data-type=\"割書\"]{display:inline-table;vertical-align:top}tei-seg[data-type=\"warichu-right\"],tei-seg[data-type=\"warichu-left\"]{font-size:50%;display:table-row}*[data-type=\"zodiac\"]{color:royalblue}",
+          "description": "Custom style sheet"
+        }
+      }
     }
   },
   "scripts": {

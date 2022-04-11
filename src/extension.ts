@@ -8,17 +8,23 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       const panel = vscode.window.createWebviewPanel(
         "openPreview",
-        "プレビュー",
+        "vscode-japanese-tei",
         vscode.ViewColumn.Two,
         { enableScripts: true }
       );
 
       //初期値
-      panel.webview.html = generatePanelContent();
+      panel.webview.html = generatePanelContent(
+        context.extensionUri,
+        panel.webview
+      );
 
       //エディタの内容を取得、パネルに反映
       const updateWebview = () => {
-        panel.webview.html = generatePanelContent();
+        panel.webview.html = generatePanelContent(
+          context.extensionUri,
+          panel.webview
+        );
       };
 
       //イベントリスナ
@@ -103,7 +109,10 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(insertRuby);
 }
 
-function generatePanelContent() {
+function generatePanelContent(
+  _extensionUri: vscode.Uri,
+  webview: vscode.Webview
+) {
   let activeEditor = vscode.window.activeTextEditor;
   let text: string = "";
   if (activeEditor) {
@@ -113,100 +122,77 @@ function generatePanelContent() {
   //xmlをhtmlに変換
   const html = convertXml2Html(text);
 
-  const css = `
+  const conf = vscode.workspace.getConfiguration("vscode-japanese-tei");
+  const fontSize = conf.get("fontSize");
 
-  #main {
-    overflow-y: auto;
-    writing-mode: vertical-rl;
+  let css = "";
+
+  if (conf.get("useCustomStyle")) {
+    css += conf.get("customStyle");
   }
 
-  /* teiHeader */
-  tei-teiHeader {
-    display: none;
+  if (fontSize) {
+    css += `
+    body {
+      font-size: ${fontSize};
+    }
+    `;
   }
 
-  /* p */
-  tei-p {
-    display: block;
-  }
+  // Local path to main script run in the webview
+  const scriptPathOnDisk = vscode.Uri.joinPath(
+    _extensionUri,
+    "media",
+    "main.js"
+  );
 
-  tei-name {
-    background-color: lightyellow;
-  }
+  // And the uri we use to load this script in the webview
+  const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
 
-  tei-date {
-    background-color: lightblue;
-  }
+  // Local path to css styles
+  const styleCETEICeanPath = vscode.Uri.joinPath(
+    _extensionUri,
+    "media",
+    "CETEIcean.css"
+  );
 
-  tei-persName {
-    background-color: lightsalmon;
-  }
+  // Uri to load styles into webview
+  const stylesCETEICeanUri = webview.asWebviewUri(styleCETEICeanPath);
 
-  tei-placeName {
-    background-color: lightgreen;
+  /*
+  const oddName: any = conf.get("odd");
+  if(oddName) {
+    const oddPath = vscode.Uri.joinPath(
+      _extensionUri,
+      "media",
+      `${oddName}.odd`
+    );
+    const uri = webview.asWebviewUri(oddPath).toString();
+    let data = vscode.workspace.openTextDocument(uri);
   }
+  */
 
-  *[data-type="book"] {
-    color: green;
-  }
-
-  *[data-type="page"] {
-    background-color: gray;
-  }
-  
-  tei-lb:after {
-    content: '\\a';
-    white-space: pre;
-  }
-
-  *[data-type="割書"] {
-    display: inline-table;
-    vertical-align: top;
-  }
-
-  tei-seg[data-type="warichu-right"], tei-seg[data-type="warichu-left"] {
-    font-size: 50%;
-    display: table-row;
-  }
-
-  *[data-type="zodiac"] {
-    color: royalblue;
-  }
-
-  `;
-
-  return `<!DOCTYPE html>
+  return (
+    `<!DOCTYPE html>
   <html lang="ja">
     <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      ` +
+    (conf.get("useStylesCETEIcean")
+      ? `<link href="${stylesCETEICeanUri}" rel="stylesheet">`
+      : "") +
+    `
       <style>
         ${css}
       </style>
+      <title>vscode-japanese-tei</title>
     </head>
     <body id="main">
       ${html}
     </body>
-    <script>
-    const vscode = acquireVsCodeApi();
-    const previousState = vscode.getState();
-
-    window.setTimeout(function(){
-      //縦書き画面の先頭に移動する
-      let scrollPositionX = window.outerWidth
-
-      //stateにスクロール位置が残っていればそれを使う
-      if(previousState && previousState.scrollPositionX){
-        scrollPositionX = previousState.scrollPositionX
-      }
-      window.scroll(scrollPositionX, 0);
-    }, 1);
-
-    //スクロール位置を保存する
-    window.onscroll = () => {
-      const scrollPositionX = window.pageXOffset;
-      vscode.setState({ scrollPositionX });
-    };
-    </script>
-  </html> `;
+    <script src="${scriptUri}"></script>
+  </html> `
+  );
 }
 
 export function deactivate() {}
