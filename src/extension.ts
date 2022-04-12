@@ -5,7 +5,7 @@ export function activate(context: vscode.ExtensionContext) {
   //パネルを作成する
   let panelGenerator = vscode.commands.registerCommand(
     "vscode-japanese-tei.openPreview",
-    () => {
+    async () => {
       const panel = vscode.window.createWebviewPanel(
         "openPreview",
         "vscode-japanese-tei",
@@ -14,14 +14,14 @@ export function activate(context: vscode.ExtensionContext) {
       );
 
       //初期値
-      panel.webview.html = generatePanelContent(
+      panel.webview.html = await generatePanelContent(
         context.extensionUri,
         panel.webview
       );
 
       //エディタの内容を取得、パネルに反映
-      const updateWebview = () => {
-        panel.webview.html = generatePanelContent(
+      const updateWebview = async () => {
+        panel.webview.html = await generatePanelContent(
           context.extensionUri,
           panel.webview
         );
@@ -109,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(insertRuby);
 }
 
-function generatePanelContent(
+async function generatePanelContent(
   _extensionUri: vscode.Uri,
   webview: vscode.Webview
 ) {
@@ -126,10 +126,6 @@ function generatePanelContent(
   const fontSize = conf.get("fontSize");
 
   let css = "";
-
-  if (conf.get("useCustomStyle")) {
-    css += conf.get("customStyle");
-  }
 
   if (fontSize) {
     css += `
@@ -149,28 +145,36 @@ function generatePanelContent(
   // And the uri we use to load this script in the webview
   const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
 
-  // Local path to css styles
-  const styleCETEICeanPath = vscode.Uri.joinPath(
-    _extensionUri,
-    "media",
-    "CETEIcean.css"
-  );
-
   // Uri to load styles into webview
-  const stylesCETEICeanUri = webview.asWebviewUri(styleCETEICeanPath);
+  let stylesCETEICeanUri = "";
 
-  /*
   const oddName: any = conf.get("odd");
-  if(oddName) {
+  if (oddName) {
     const oddPath = vscode.Uri.joinPath(
       _extensionUri,
       "media",
       `${oddName}.odd`
     );
-    const uri = webview.asWebviewUri(oddPath).toString();
-    let data = vscode.workspace.openTextDocument(uri);
+    css += await convertOdd2Css(oddPath);
   }
-  */
+
+  //CETEIceanのCSSを読み込む
+  if (conf.get("useStylesCETEIcean")) {
+    // Local path to css styles
+    const styleCETEICeanPath = vscode.Uri.joinPath(
+      _extensionUri,
+      "media",
+      "CETEIcean.css"
+    );
+
+    const ceteiceanUri = webview.asWebviewUri(styleCETEICeanPath);
+    stylesCETEICeanUri = `<link href="${ceteiceanUri}" rel="stylesheet">`;
+  }
+
+  //カスタムスタイル
+  if (conf.get("useCustomStyle")) {
+    css += conf.get("customStyle");
+  }
 
   return (
     `<!DOCTYPE html>
@@ -178,9 +182,7 @@ function generatePanelContent(
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       ` +
-    (conf.get("useStylesCETEIcean")
-      ? `<link href="${stylesCETEICeanUri}" rel="stylesheet">`
-      : "") +
+    stylesCETEICeanUri +
     `
       <style>
         ${css}
@@ -197,6 +199,47 @@ function generatePanelContent(
 
 export function deactivate() {}
 
+//oddファイルをcssに変換する
+async function convertOdd2Css(oddPath: vscode.Uri) {
+  let css = "";
+
+  const doc = await vscode.workspace.openTextDocument(oddPath);
+
+  const oddStr = doc.getText();
+
+  const jsdom = new JSDOM();
+  const parser = new jsdom.window.DOMParser();
+
+  //以下、要検討。<?xml?>の処理
+  const spl = oddStr.split("?>");
+  const fixedXml = spl[spl.length - 1];
+  const dom = parser.parseFromString(fixedXml, "application/xml");
+  const elementSpecs: any = dom.querySelectorAll("elementSpec");
+
+  if (elementSpecs) {
+    for (const elementSpec of elementSpecs) {
+      const ident = elementSpec.getAttribute("ident");
+      const models = elementSpec.querySelectorAll("model");
+      for (const model of models) {
+        let selector = `${ident}`;
+        if (model.getAttribute("predicate")) {
+          const predicate = model.getAttribute("predicate");
+          const attr =
+            predicate.replace("@", "[").split("&#34;").join('"') + "]";
+          selector = `${ident}${attr}`;
+        }
+        const outputRendition = model.querySelector("outputRendition");
+        if (outputRendition) {
+          css += `${selector} {
+            ${outputRendition.textContent}
+          }`;
+        }
+      }
+    }
+  }
+  return css;
+}
+
 //xmlをhtmlに変換する
 function convertXml2Html(xml: string) {
   const jsdom = new JSDOM();
@@ -211,6 +254,10 @@ function convertXml2Html(xml: string) {
   const teiElement: any = dom.querySelector("TEI");
 
   const convertedElement = convert(dom, teiElement);
+
+  if (!convertedElement) {
+    return "";
+  }
 
   let html = convertedElement.outerHTML;
 
@@ -230,6 +277,9 @@ function convertXml2Html(xml: string) {
 
 //tei/xmlの要素をhtml(tei-xxx)に変換する
 function convert(dom: any, e: any) {
+  if (!e) {
+    return null;
+  }
   const nodeType = e.nodeType;
   //コメントの場合はスキップ
   if (nodeType === 8) {

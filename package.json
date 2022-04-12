@@ -1,9 +1,9 @@
 {
   "name": "vscode-japanese-tei",
   "publisher": "ldas",
-  "displayName": "vscode-japanese-tei",
+  "displayName": "TEI Japanese Editor",
   "description": "Edit and display TEI/XML",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.66.0"
   },
@@ -90,30 +90,41 @@
         "vscode-japanese-tei.fontSize": {
           "type": "string",
           "default": "1em",
-          "description": "Base font size to use for the preview panel"
+          "description": "Base font size to use for the preview panel",
+          "order": 0
+        },
+        "vscode-japanese-tei.odd": {
+          "type": "string",
+          "enum": [
+            null,
+            "vscode-japanese-tei"
+          ],
+          "default": null,
+          "description": "ODD file",
+          "order": 1,
+          "enumDescriptions": [
+            null,
+            "縦書き用のODDファイル"
+          ]
         },
         "vscode-japanese-tei.useStylesCETEIcean": {
           "type": "boolean",
           "default": true,
-          "description": "Use CETEIcean styles"
-        },
-        "vscode-japanese-tei.odd": {
-          "type": [
-            "vscode-japanese-tei",
-            "null"
-          ],
-          "default": "vscode-japanese-tei",
-          "description": "ODD file (Under development)"
+          "description": "Use CETEIcean styles",
+          "order": 2
         },
         "vscode-japanese-tei.useCustomStyle": {
           "type": "boolean",
           "default": false,
-          "description": "Use custom style"
+          "description": "Use custom style",
+          "order": 3
         },
         "vscode-japanese-tei.customStyle": {
+          "editPresentation": "multilineText",
           "type": "string",
-          "default": "#main{overflow-y:auto;writing-mode:vertical-rl}tei-teiHeader{display:none}tei-p{display:block}tei-name{background-color:lightyellow}tei-date{background-color:lightblue}tei-persName{background-color:lightsalmon}tei-placeName{background-color:lightgreen}*[data-type=\"book\"]{color:green}*[data-type=\"page\"]{background-color:gray}tei-lb:after{content:'\\a';white-space:pre}*[data-type=\"割書\"]{display:inline-table;vertical-align:top}tei-seg[data-type=\"warichu-right\"],tei-seg[data-type=\"warichu-left\"]{font-size:50%;display:table-row}*[data-type=\"zodiac\"]{color:royalblue}",
-          "description": "Custom style sheet"
+          "_default": "#main{overflow-y:auto;writing-mode:vertical-rl}tei-teiHeader{display:none}tei-p{display:block}tei-name{background-color:lightyellow}tei-date{background-color:lightblue}tei-persName{background-color:lightsalmon}tei-placeName{background-color:lightgreen}*[data-type=\"book\"]{color:green}*[data-type=\"page\"]{background-color:gray}tei-lb:after{content:'\\a';white-space:pre}*[data-type=\"割書\"]{display:inline-table;vertical-align:top}tei-seg[data-type=\"warichu-right\"],tei-seg[data-type=\"warichu-left\"]{font-size:50%;display:table-row}*[data-type=\"zodiac\"]{color:royalblue}",
+          "description": "Custom style sheet",
+          "order": 4
         }
       }
     }
@@ -124,7 +135,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/vscode": "^1.66.0",

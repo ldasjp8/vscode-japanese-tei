@@ -34,10 +34,91 @@
     <text>
         <body>
             <schemaSpec start="TEI teiCorpus" ident="vscode-japanese-tei" source="teipublisher.odd">
-                <elementSpec ident="tei-p" mode="add">
-                    <model behaviour="inline">
+                <elementSpec ident="*" mode="add">
+                    <model predicate="@id=main" behaviour="inline">
                         <outputRendition xml:space="preserve">
-            color: red;
+            overflow-y:auto;writing-mode:vertical-rl
+                        </outputRendition>
+                    </model>
+<model predicate="@data-type=&#34;book&#34;" behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            color:green
+                        </outputRendition>
+                    </model>
+<model predicate="@data-type=&#34;page&#34;" behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            background-color:gray
+                        </outputRendition>
+                    </model>
+<model predicate="@data-type=&#34;割書&#34;" behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            display:inline-table;vertical-align:top
+                        </outputRendition>
+                    </model>
+<model predicate="@data-type=&#34;zodiac&#34;" behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            color:royalblue
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-teiHeader" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            display:none
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-p" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            display:block
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-name" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            background-color:lightyellow
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-date" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            background-color:lightblue
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-persName" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            background-color:lightsalmon
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-placeName" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            background-color:lightgreen
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-lb:after" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            content:'\a';white-space:pre
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+<elementSpec ident="tei-seg" mode="add">
+                    <model predicate="@data-type=&#34;warichu-right&#34;" behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            font-size:50%;display:table-row
+                        </outputRendition>
+                    </model>
+<model predicate="@data-type=&#34;warichu-left&#34;" behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            font-size:50%;display:table-row
                         </outputRendition>
                     </model>
                 </elementSpec>

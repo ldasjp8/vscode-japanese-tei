@@ -1,4 +1,4 @@
-# vscode-japanese-tei
+# TEI Japanese Editor
 
 Edit and display TEI/XML
 
@@ -46,6 +46,16 @@ Base font size to use for the preview panel
 
 ![fontSize screencast](media/screen-config.gif)
 
+### odd
+
+`@en`
+
+Select ODD file
+
+`@ja`
+
+適用するODDファイルを選択する
+
 ### useStylesCETEIcean
 
 `@en`
@@ -55,6 +65,26 @@ Use CETEIcean styles
 `@ja`
 
 CETEIceanのスタイルを使用する
+
+### useCustomStyle
+
+`@en`
+
+Use Custom styles
+
+`@ja`
+
+独自のcssを使用する
+
+### customStyle
+
+`@en`
+
+Input custom css
+
+`@ja`
+
+独自のcssを入力する
 
 ## Release Notes
 
@@ -74,3 +104,6 @@ Minor update
 
 Update readme
 
+### 0.0.5
+
+Add odd file support
