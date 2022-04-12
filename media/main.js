@@ -1,7 +1,7 @@
 const vscode = acquireVsCodeApi();
 const previousState = vscode.getState();
 
-window.setTimeout(function () {
+window.onload = function() {
   //縦書き画面の先頭に移動する
   let scrollPositionX = window.outerWidth;
 
@@ -10,7 +10,7 @@ window.setTimeout(function () {
     scrollPositionX = previousState.scrollPositionX;
   }
   window.scroll(scrollPositionX, 0);
-}, 1);
+};
 
 //スクロール位置を保存する
 window.onscroll = () => {

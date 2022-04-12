@@ -1,0 +1,44 @@
+#main {
+  overflow-y: auto;
+  writing-mode: vertical-rl;
+}
+tei-teiHeader {
+  display: none;
+}
+tei-p {
+  display: block;
+}
+tei-name {
+  background-color: lightyellow;
+}
+tei-date {
+  background-color: lightblue;
+}
+tei-persName {
+  background-color: lightsalmon;
+}
+tei-placeName {
+  background-color: lightgreen;
+}
+*[data-type="book"] {
+  color: green;
+}
+*[data-type="page"] {
+  background-color: gray;
+}
+tei-lb:after {
+  content: "\a";
+  white-space: pre;
+}
+*[data-type="割書"] {
+  display: inline-table;
+  vertical-align: top;
+}
+tei-seg[data-type="warichu-right"],
+tei-seg[data-type="warichu-left"] {
+  font-size: 50%;
+  display: table-row;
+}
+*[data-type="zodiac"] {
+  color: royalblue;
+}

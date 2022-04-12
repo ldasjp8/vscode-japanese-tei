@@ -1,4 +1,4 @@
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+<TEI xmlns="http://www.c.org/ns/1.0" xml:lang="en">
     <teiHeader>
         <fileDesc>
             <titleStmt>
@@ -61,56 +61,83 @@
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-teiHeader" mode="add">
+<elementSpec ident="teiHeader" mode="add">
                     <model  behaviour="inline">
                         <outputRendition xml:space="preserve">
             display:none
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-p" mode="add">
+<elementSpec ident="p" mode="add">
                     <model  behaviour="inline">
                         <outputRendition xml:space="preserve">
             display:block
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-name" mode="add">
+<elementSpec ident="name" mode="add">
                     <model  behaviour="inline">
                         <outputRendition xml:space="preserve">
             background-color:lightyellow
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-date" mode="add">
+<elementSpec ident="date" mode="add">
                     <model  behaviour="inline">
                         <outputRendition xml:space="preserve">
             background-color:lightblue
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-persName" mode="add">
+<elementSpec ident="persName" mode="add">
                     <model  behaviour="inline">
                         <outputRendition xml:space="preserve">
             background-color:lightsalmon
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-placeName" mode="add">
+<elementSpec ident="placeName" mode="add">
                     <model  behaviour="inline">
                         <outputRendition xml:space="preserve">
             background-color:lightgreen
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-lb:after" mode="add">
+
+<elementSpec ident="lb:before" mode="add"> <!-- :after -->
                     <model  behaviour="inline">
                         <outputRendition xml:space="preserve">
             content:'\a';white-space:pre
                         </outputRendition>
                     </model>
                 </elementSpec>
-<elementSpec ident="tei-seg" mode="add">
+
+<elementSpec ident="app > note" mode="add"> <!-- :after -->
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            display: none;
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+
+                <elementSpec ident="app" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            color: red;
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+
+<elementSpec ident="rdg" mode="add">
+                    <model  behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            display: none;
+                        </outputRendition>
+                    </model>
+                </elementSpec>
+
+
+<elementSpec ident="seg" mode="add">
                     <model predicate="@data-type=&#34;warichu-right&#34;" behaviour="inline">
                         <outputRendition xml:space="preserve">
             font-size:50%;display:table-row

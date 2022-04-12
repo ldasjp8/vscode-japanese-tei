@@ -21,17 +21,15 @@ export function activate(context: vscode.ExtensionContext) {
 
       //エディタの内容を取得、パネルに反映
       const updateWebview = async () => {
-        panel.webview.html = await generatePanelContent(
-          context.extensionUri,
-          panel.webview
-        );
+        const html = await generatePanelContent(context.extensionUri,
+          panel.webview);
+        panel.webview.html = html;
       };
 
-      //イベントリスナ
-      let activeEditor = vscode.window.activeTextEditor;
-
+      
       //テキストが変動したら更新
       vscode.workspace.onDidChangeTextDocument((event) => {
+        const activeEditor = vscode.window.activeTextEditor;
         if (activeEditor && event.document === activeEditor.document) {
           updateWebview();
         }
@@ -76,7 +74,11 @@ export function activate(context: vscode.ExtensionContext) {
         // Get the word within the selection
         const word = document.getText(selection);
         //const reversed = word.split('').reverse().join('');
-        const replacedWord = `<note type="割書"><seg type="warichu-right">${word}</seg><seg type="warichu-left"></seg></note>`;
+        const replacedWord = `<note type="割書">
+        <seg type="warichu-right">${word}</seg>
+        <milestone unit="wbr"/>
+        <seg type="warichu-left"></seg>
+        </note>`;
         editor.edit((editBuilder) => {
           editBuilder.replace(selection, replacedWord);
         });
@@ -153,6 +155,7 @@ async function generatePanelContent(
     const oddPath = vscode.Uri.joinPath(
       _extensionUri,
       "media",
+      "odd",
       `${oddName}.odd`
     );
     css += await convertOdd2Css(oddPath);
@@ -242,6 +245,8 @@ async function convertOdd2Css(oddPath: vscode.Uri) {
 
 //xmlをhtmlに変換する
 function convertXml2Html(xml: string) {
+  return xml;
+  /*
   const jsdom = new JSDOM();
   const parser = new jsdom.window.DOMParser();
 
@@ -273,6 +278,7 @@ function convertXml2Html(xml: string) {
   }
 
   return html;
+  */
 }
 
 //tei/xmlの要素をhtml(tei-xxx)に変換する

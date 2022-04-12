@@ -107,3 +107,7 @@ Update readme
 ### 0.0.5
 
 Add odd file support
+
+### 0.0.6
+
+Bug fix
