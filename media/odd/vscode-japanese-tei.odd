@@ -40,6 +40,11 @@
             overflow-y:auto;writing-mode:vertical-rl
                         </outputRendition>
                     </model>
+                    <model predicate="@data-origname=&#34;g&#34;" behaviour="inline">
+                        <outputRendition xml:space="preserve">
+            color: purple;
+                        </outputRendition>
+                    </model>
 <model predicate="@data-type=&#34;book&#34;" behaviour="inline">
                         <outputRendition xml:space="preserve">
             color:green

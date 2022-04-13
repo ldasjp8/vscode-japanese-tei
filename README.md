@@ -111,3 +111,7 @@ Add odd file support
 ### 0.0.6
 
 Bug fix
+
+### 0.0.7
+
+Correspondence to `<g>` element

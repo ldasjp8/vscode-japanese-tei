@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
-import { JSDOM } from "jsdom";
+//import { JSDOM } from "jsdom";
+import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
 
 export function activate(context: vscode.ExtensionContext) {
   //パネルを作成する
@@ -210,20 +211,19 @@ async function convertOdd2Css(oddPath: vscode.Uri) {
 
   const oddStr = doc.getText();
 
-  const jsdom = new JSDOM();
-  const parser = new jsdom.window.DOMParser();
-
-  //以下、要検討。<?xml?>の処理
-  const spl = oddStr.split("?>");
-  const fixedXml = spl[spl.length - 1];
-  const dom = parser.parseFromString(fixedXml, "application/xml");
-  const elementSpecs: any = dom.querySelectorAll("elementSpec");
+  const dom = new DOMParser().parseFromString(oddStr, "text/xml");
+  const elementSpecs: any = dom.getElementsByTagName("elementSpec");
 
   if (elementSpecs) {
-    for (const elementSpec of elementSpecs) {
+    for(let i = 0; i < elementSpecs.length; i++){
+      //for (const elementSpec of elementSpecs) {
+      const elementSpec = elementSpecs[i];
       const ident = elementSpec.getAttribute("ident");
-      const models = elementSpec.querySelectorAll("model");
-      for (const model of models) {
+      //const models = elementSpec.querySelectorAll("model");
+      const models = elementSpec.getElementsByTagName("model");
+      //for (const model of models) {
+      for(let j = 0; j < models.length; j++){
+        const model = models[j];
         let selector = `${ident}`;
         if (model.getAttribute("predicate")) {
           const predicate = model.getAttribute("predicate");
@@ -231,7 +231,8 @@ async function convertOdd2Css(oddPath: vscode.Uri) {
             predicate.replace("@", "[").split("&#34;").join('"') + "]";
           selector = `${ident}${attr}`;
         }
-        const outputRendition = model.querySelector("outputRendition");
+        //const outputRendition = model.querySelector("outputRendition");
+        const outputRendition = model.getElementsByTagName("outputRendition")[0];
         if (outputRendition) {
           css += `${selector} {
             ${outputRendition.textContent}
@@ -245,7 +246,58 @@ async function convertOdd2Css(oddPath: vscode.Uri) {
 
 //xmlをhtmlに変換する
 function convertXml2Html(xml: string) {
-  return xml;
+  let doc = new DOMParser().parseFromString(xml, "text/xml");
+
+  const gs = doc.getElementsByTagName("g");
+
+  const glyphs = doc.getElementsByTagName("glyph");
+  const glyphMap: any = {};
+  for (let i = 0; i < glyphs.length; i++) {
+    const g = glyphs[i];
+
+    const ref: any = g.getAttribute("xml:id");
+    const mappings = g.getElementsByTagName("mapping");
+    let mappingValue: any = "";
+    //altがあればaltを使う
+    let mappingAltValue = "";
+    for(let j = 0; j < mappings.length; j++){
+      const mapping = mappings[j];
+      const type = mapping.getAttribute("type");
+      mappingValue = mapping.textContent;
+      //altがあればaltを使う
+      if(type === "alt"){
+        mappingAltValue = mappingValue;
+      }
+    }
+    //altがなければ、他のmappingを使う
+    if(mappingAltValue === ""){
+      mappingAltValue = mappingValue;
+    }
+    glyphMap[ref] = mappingAltValue;
+  }
+
+  const replaceList = [];
+
+  for (let i = 0; i < gs.length; i++) {
+    const g: any = gs[i];
+    const ref = g.getAttribute("ref").replace("#", "");
+    if(glyphMap[ref]){
+      const unicode = glyphMap[ref];
+      const newElement = doc.createElement(`span data-origname="g"`);
+      newElement.textContent = unicode;
+      replaceList.push({g, newElement});
+    }
+  }
+
+  for(const replaceObj of replaceList){
+    const {g, newElement} = replaceObj;
+    g.parentNode.replaceChild(newElement, g);
+  }
+
+  let html = new XMLSerializer().serializeToString(doc);
+  html = openEmptyTags(html);
+  return html;
+
   /*
   const jsdom = new JSDOM();
   const parser = new jsdom.window.DOMParser();
@@ -265,20 +317,22 @@ function convertXml2Html(xml: string) {
   }
 
   let html = convertedElement.outerHTML;
+  return html;
+  */
+}
 
-  //空タグへの対応
+//空タグへの対応
+function openEmptyTags(html: string){
   const emptyTags = html.match(/<.+?\/>/g);
   if (emptyTags) {
     for (const emptyTag of emptyTags) {
       const tmp = emptyTag.split("<");
       const tagName = tmp[tmp.length - 1].split(" ")[0];
-      const replaced = emptyTag.replace(/\/>/, `></${tagName}>`);
+      const replaced = emptyTag.replace(/\/>/, `></${tagName}>`).replace(">>", ">");
       html = html.replace(emptyTag, replaced);
     }
   }
-
   return html;
-  */
 }
 
 //tei/xmlの要素をhtml(tei-xxx)に変換する

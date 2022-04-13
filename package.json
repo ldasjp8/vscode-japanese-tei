@@ -3,7 +3,7 @@
   "publisher": "ldas",
   "displayName": "TEI Japanese Editor",
   "description": "Edit and display TEI/XML",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.66.0"
   },
@@ -140,16 +140,18 @@
     "publish": "vsce publish"
   },
   "devDependencies": {
-    "@types/vscode": "^1.66.0",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.0",
     "@types/node": "14.x",
+    "@types/vscode": "^1.66.0",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
+    "@vscode/test-electron": "^2.1.3",
+    "@xmldom/xmldom": "^0.8.2",
     "eslint": "^8.11.0",
     "glob": "^7.2.0",
     "mocha": "^9.2.2",
     "typescript": "^4.5.5",
-    "@vscode/test-electron": "^2.1.3"
+    "xmldom-qsa": "^1.1.0"
   }
 }
