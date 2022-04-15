@@ -36,55 +36,35 @@ Insert warichu / 割注を挿入する | ctrl-k w |  cmd-k w |
 
 ### fontSize
 
-`@en`
+`@en` Base font size to use for the preview panel
 
-Base font size to use for the preview panel
-
-`@ja`
-
-プレビューパネルで使用する基本フォントサイズ
+`@ja` プレビューパネルで使用する基本フォントサイズ
 
 ![fontSize screencast](media/screen-config.gif)
 
 ### odd
 
-`@en`
+`@en` Select ODD file
 
-Select ODD file
-
-`@ja`
-
-適用するODDファイルを選択する
+`@ja` 適用するODDファイルを選択する
 
 ### useStylesCETEIcean
 
-`@en`
+`@en` Use CETEIcean styles
 
-Use CETEIcean styles
-
-`@ja`
-
-CETEIceanのスタイルを使用する
+`@ja` CETEIceanのスタイルを使用する
 
 ### useCustomStyle
 
-`@en`
+`@en` Use Custom styles
 
-Use Custom styles
-
-`@ja`
-
-独自のcssを使用する
+`@ja` 独自のcssを使用する
 
 ### customStyle
 
-`@en`
+`@en` Input custom css
 
-Input custom css
-
-`@ja`
-
-独自のcssを入力する
+`@ja` 独自のcssを入力する
 
 ## Release Notes
 
@@ -115,3 +95,7 @@ Bug fix
 ### 0.0.7
 
 Correspondence to `<g>` element
+
+### 0.0.8 - 0.0.24
+
+Bug fix

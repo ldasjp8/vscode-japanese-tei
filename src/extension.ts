@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-//import { JSDOM } from "jsdom";
 import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
 
 export function activate(context: vscode.ExtensionContext) {
