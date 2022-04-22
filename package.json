@@ -64,16 +64,23 @@
     "menus": {
       "editor/context": [
         {
-          "command": "vscode-japanese-tei.openPreview"
+          "command": "vscode-japanese-tei.openPreview",
+          "group": "vscode-japanese-tei@1"
         },
         {
-          "command": "vscode-japanese-tei.insertApp"
+          "command": "vscode-japanese-tei.insertApp",
+          "when": "editorHasSelection",
+          "group": "vscode-japanese-tei@2"
         },
         {
-          "command": "vscode-japanese-tei.insertWarichu"
+          "command": "vscode-japanese-tei.insertWarichu",
+          "when": "editorHasSelection",
+          "group": "vscode-japanese-tei@3"
         },
         {
-          "command": "vscode-japanese-tei.insertRuby"
+          "command": "vscode-japanese-tei.insertRuby",
+          "when": "editorHasSelection",
+          "group": "vscode-japanese-tei@4"
         }
       ]
     },
