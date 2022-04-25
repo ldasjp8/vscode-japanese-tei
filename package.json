@@ -29,7 +29,8 @@
     "commands": [
       {
         "command": "vscode-japanese-tei.openPreview",
-        "title": "generate panel"
+        "title": "generate panel",
+        "icon":"$(go-to-file)"
       },
       {
         "command": "vscode-japanese-tei.insertApp",
@@ -62,6 +63,13 @@
       }
     ],
     "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == xml",
+          "command": "vscode-japanese-tei.openPreview",
+          "group": "navigation"
+        }
+      ],
       "editor/context": [
         {
           "command": "vscode-japanese-tei.openPreview",
