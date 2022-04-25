@@ -99,3 +99,7 @@ Correspondence to `<g>` element
 ### 0.0.8 - 0.0.24
 
 Bug fix
+
+### 0.0.25
+
+Add icon
