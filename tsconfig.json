@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "ES2020",
-		"outDir": "out",
+		"outDir": "dist/desktop",
 		"lib": [
 			"ES2020"
 		],
