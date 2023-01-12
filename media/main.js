@@ -10,6 +10,10 @@ window.onload = function() {
     scrollPositionX = previousState.scrollPositionX;
   }
   window.scroll(scrollPositionX, 0);
+
+  window.addEventListener("wheel", (e) => {
+    window.scroll(window.pageXOffset - e.deltaY, 0);
+  });
 };
 
 //スクロール位置を保存する
